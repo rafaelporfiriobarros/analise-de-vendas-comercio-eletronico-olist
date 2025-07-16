@@ -119,12 +119,23 @@ FROM customers_dataset;
 SELECT COUNT(*) AS total_pedidos
 FROM orders_dataset;
 
--- Quais são os status de pedidos possíveis e quantos existem de cada?
+-- Quais são os status de pedidos possíveis e quantos existem em cada um?
 
 SELECT order_status, COUNT(*) AS quantidade
 FROM orders_dataset
 GROUP BY order_status
 ORDER BY quantidade DESC;
+
+-- Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?
+
+SELECT p.product_category_name AS categoria,
+       COUNT(oi.order_id) AS total_vendas,
+	   SUM(oi.price) AS receita_total
+FROM order_items_dataset AS oi
+JOIN products_dataset AS p ON oi.product_id = p.product_id
+GROUP BY p.product_category_name
+ORDER BY total_vendas DESC
+LIMIT 10;
 
 
 
