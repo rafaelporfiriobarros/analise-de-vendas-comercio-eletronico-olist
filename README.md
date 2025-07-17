@@ -41,13 +41,11 @@ SELECT COUNT(DISTINCT customer_unique_id) AS total_clientes_unicos
 FROM customers_dataset;
 
 
-
 ### 2. Qual o número total de pedidos ?
 
 ```sql
 SELECT COUNT(*) AS total_pedidos
 FROM orders_dataset;
-
 
 
 ### 3. Quais são os 10 produtos mais vendidos em quantidade?
@@ -64,7 +62,7 @@ LIMIT 10;
 
 ### 4. Quais são os status de pedidos possíveis e quantos existem em cada um?
 
-```
+```sql
 SELECT order_status, COUNT(*) AS quantidade
 FROM orders_dataset
 GROUP BY order_status
@@ -83,10 +81,9 @@ ORDER BY total_vendas DESC
 LIMIT 10;
 
 
-
 ### 6. Quais são os vendedores com maior faturamento?
 
-```
+```sql
 SELECT 
     s.seller_id,
     COUNT(DISTINCT oi.order_id) AS total_orders,
@@ -109,8 +106,6 @@ FROM order_items_dataset AS oi
 JOIN products_dataset AS p ON oi.product_id = p.product_id
 GROUP BY p.product_category_name
 ORDER BY receita_total DESC;
-
-
 
 ### 8. Qual foi o ticket médio (preço médio por pedido)?
 
