@@ -44,7 +44,7 @@ FROM customers_dataset;
 
 ### 2. Qual o número total de pedidos ?
 
-```
+```sql
 SELECT COUNT(*) AS total_pedidos
 FROM orders_dataset;
 
@@ -52,7 +52,7 @@ FROM orders_dataset;
 
 ### 3. Quais são os 10 produtos mais vendidos em quantidade?
 
-```
+```sql
 SELECT oi.product_id,
        COUNT(*) AS total_vendas,
 	   p.product_category_name
@@ -72,7 +72,7 @@ ORDER BY quantidade DESC;
 
 ### 5. Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?
 
-```
+```sql
 SELECT p.product_category_name AS categoria,
        COUNT(oi.order_id) AS total_vendas,
 	   SUM(oi.price) AS receita_total
@@ -102,7 +102,7 @@ LIMIT 10;
 
 ### 7. Qual é a receita total por categoria de produto?
 
-```
+```sql
 SELECT p.product_category_name, 
 	   SUM(oi.price) AS receita_total
 FROM order_items_dataset AS oi
@@ -114,6 +114,6 @@ ORDER BY receita_total DESC;
 
 ### 8. Qual foi o ticket médio (preço médio por pedido)?
 
-```
+```sql
 SELECT AVG(total) AS ticket_medio
 FROM(SELECT order_id, SUM(price) AS total FROM order_items_dataset GROUP BY order_id)sub;
