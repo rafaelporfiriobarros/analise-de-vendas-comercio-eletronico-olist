@@ -40,11 +40,15 @@ O conjunto contém vários arquivos CSV relacionados entre si:
 SELECT COUNT(DISTINCT customer_unique_id) AS total_clientes_unicos
 FROM customers_dataset;
 
+
+
 ### 2. Qual o número total de pedidos ?
 
 ```
 SELECT COUNT(*) AS total_pedidos
 FROM orders_dataset;
+
+
 
 ### 3. Quais são os 10 produtos mais vendidos em quantidade?
 
@@ -78,6 +82,8 @@ GROUP BY p.product_category_name
 ORDER BY total_vendas DESC
 LIMIT 10;
 
+
+
 ### 6. Quais são os vendedores com maior faturamento?
 
 ```
@@ -92,6 +98,8 @@ GROUP BY s.seller_id
 ORDER BY total_revenue DESC
 LIMIT 10;
 
+
+
 ### 7. Qual é a receita total por categoria de produto?
 
 ```
@@ -101,6 +109,8 @@ FROM order_items_dataset AS oi
 JOIN products_dataset AS p ON oi.product_id = p.product_id
 GROUP BY p.product_category_name
 ORDER BY receita_total DESC;
+
+
 
 ### 8. Qual foi o ticket médio (preço médio por pedido)?
 
