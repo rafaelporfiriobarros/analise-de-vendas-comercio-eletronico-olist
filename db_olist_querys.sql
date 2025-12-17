@@ -75,6 +75,16 @@ SELECT AVG(total) AS ticket_medio
 FROM(SELECT order_id, SUM(price) AS total FROM order_items_dataset GROUP BY order_id)sub;
 
 
+-- Qual o tempo médio de entrega dos pedidos (dias)?
+SELECT 
+    AVG(DATE_PART('day', 
+        CAST(order_delivered_customer_date AS timestamp) - 
+        CAST(order_purchase_timestamp AS timestamp)
+    )) AS tempo_medio_entrega
+FROM 
+	orders_dataset
+WHERE 
+    order_delivered_customer_date IS NOT NULL;
 
 
 
