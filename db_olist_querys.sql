@@ -7,6 +7,23 @@ select * from products_dataset limit 10;
 select * from customers_dataset limit 10;
 select * from geolocation_dataset limit 10;
 
+-- Quantos vendedores existem?
+
+SELECT COUNT(*) AS total_vendedores
+FROM sellers_dataset;
+
+-- Quais são todas as categorias dos produtos?
+SELECT DISTINCT product_category_name
+FROM products_dataset
+ORDER BY product_category_name
+
+-- Quantos produtos existem por categoria?
+
+SELECT product_category_name, COUNT(*) AS total_produtos
+FROM products_dataset
+GROUP BY product_category_name
+ORDER BY total_produtos DESC;
+
 
 -- Quantos clientes únicos existem no dataset ?
 
@@ -17,6 +34,23 @@ FROM customers_dataset;
 
 SELECT COUNT(*) AS total_pedidos
 FROM orders_dataset;
+
+-- Há quantos pedidos por estado do cliente?
+
+SELECT c.customer_state, COUNT(*) AS total_pedidos
+FROM orders_dataset AS o
+JOIN customers_dataset AS c ON o.customer_id = c.customer_id
+GROUP BY c.customer_state
+ORDER BY total_pedidos DESC;
+
+-- Quais as top 10 cidades com mais clientes ?
+
+SELECT customer_city, COUNT(*) AS total_clientes
+FROM customers_dataset
+GROUP BY customer_city
+ORDER BY total_clientes DESC
+LIMIT 10;
+
 
 -- Quais são os 10 produtos mais vendidos em quantidade ?
 
@@ -87,6 +121,7 @@ WHERE
     order_delivered_customer_date IS NOT NULL;
 
 
+	
 
 
 
