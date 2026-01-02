@@ -100,3 +100,5 @@ ORDER BY receita_total DESC;
 
 SELECT AVG(total) AS ticket_medio
 FROM(SELECT order_id, SUM(price) AS total FROM order_items_dataset GROUP BY order_id)sub;
+
+
