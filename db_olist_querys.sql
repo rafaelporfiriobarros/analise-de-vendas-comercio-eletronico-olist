@@ -7,6 +7,62 @@ select * from products_dataset limit 10;
 select * from customers_dataset limit 10;
 select * from geolocation_dataset limit 10;
 
+<<<<<<< HEAD
+=======
+
+-- 1. Liste os 10 pedidos mais recentes.
+
+select * from orders_dataset
+order by order_purchase_timestamp desc
+limit 10;
+
+-- 2.Quantos pedidos existem na base?
+
+select count(*) from orders_dataset;
+
+-- 3. Quantos pedidos foram entregues?
+
+select * from orders_dataset limit 10;
+
+select count(*) from orders_dataset
+where order_status = 'delivered';  
+
+-- 4. Quantos clientes únicos existem?
+
+select count(distinct customer_unique_id)
+from customers_dataset;
+
+-- 5. Quantos sellers existem?
+
+SELECT COUNT(*) FROM orders_dataset;
+
+-- 6. Quantos produtos existem?
+
+select count(*) from products_dataset;
+
+-- 7. Liste todas as categorias de produtos distintas.
+
+select distinct product_category_name
+from products_dataset;
+
+-- 8. Quantos pedidos foram cancelados?
+
+select count(*) from orders_dataset
+where order_status = 'canceled';
+
+-- 9. Qual o valor médio de frete (freight_value)?
+
+select avg(freight_value) from order_items_dataset;
+
+-- 10. Liste os 10 pedidos com o maior valor de frete.
+
+select order_id, freight_value
+from order_items_dataset
+order by freight_value desc
+limit 10;
+
+-- Quantos vendedores existem?
+>>>>>>> b107598512e8e20f8807553ab0dc22e98f7d15c9
 
 -- 1. Liste os 10 pedidos mais recentes.
 
