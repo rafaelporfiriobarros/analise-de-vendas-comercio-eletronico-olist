@@ -7,123 +7,144 @@ select * from products_dataset limit 10;
 select * from customers_dataset limit 10;
 select * from geolocation_dataset limit 10;
 
--- Quantos vendedores existem?
 
-SELECT COUNT(*) AS total_vendedores
-FROM sellers_dataset;
+-- 1. Liste os 10 pedidos mais recentes.
 
--- Quais são todas as categorias dos produtos?
-SELECT DISTINCT product_category_name
-FROM products_dataset
-ORDER BY product_category_name
+select * from orders_dataset
+order by order_purchase_timestamp desc
+limit 10;
 
--- Quantos produtos existem por categoria?
+-- 2.Quantos pedidos existem na base?
 
-SELECT product_category_name, COUNT(*) AS total_produtos
-FROM products_dataset
-GROUP BY product_category_name
-ORDER BY total_produtos DESC;
+select count(*) as total_de_pedidos from orders_dataset;
 
+-- 3. Quantos pedidos foram entregues?
 
--- Quantos clientes únicos existem no dataset ?
+select count(*) from orders_dataset
+where order_status = 'delivered';  
 
-SELECT COUNT(DISTINCT customer_unique_id) AS total_clientes_unicos
-FROM customers_dataset;
+-- 4. Quantos clientes únicos existem?
 
--- Qual o número total de pedidos ?
+select count(distinct customer_unique_id)
+from customers_dataset;
 
-SELECT COUNT(*) AS total_pedidos
-FROM orders_dataset;
+-- 5. Quantos sellers existem?
 
--- Há quantos pedidos por estado do cliente?
+select count(*) from sellers_dataset;
 
-SELECT c.customer_state, COUNT(*) AS total_pedidos
-FROM orders_dataset AS o
-JOIN customers_dataset AS c ON o.customer_id = c.customer_id
-GROUP BY c.customer_state
-ORDER BY total_pedidos DESC;
+-- 6. Quantos produtos existem?
 
--- Quais as top 10 cidades com mais clientes ?
+select count(*) from products_dataset;
 
-SELECT customer_city, COUNT(*) AS total_clientes
-FROM customers_dataset
-GROUP BY customer_city
-ORDER BY total_clientes DESC
-LIMIT 10;
+-- 7. Liste todas as categorias de produtos distintas.
 
+select distinct product_category_name
+from products_dataset
+order by product_category_name;
 
--- Quais são os 10 produtos mais vendidos em quantidade ?
+-- 8. Quantos pedidos foram cancelados?
 
-SELECT oi.product_id,
-       COUNT(*) AS total_vendas,
-	   p.product_category_name
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY oi.product_id, p.product_category_name
-ORDER BY total_vendas DESC
-LIMIT 10;
+select count(*) from orders_dataset
+where order_status = 'canceled';
 
--- Quais são os status de pedidos possíveis e quantos existem em cada um?
+-- 9. Qual o valor médio de frete (freight_value)?
 
-SELECT order_status, COUNT(*) AS quantidade
-FROM orders_dataset
-GROUP BY order_status
-ORDER BY quantidade DESC;
+select avg(freight_value) from order_items_dataset;
 
--- Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?
+-- 10. Liste os 10 pedidos com o maior valor de frete.
 
-SELECT p.product_category_name AS categoria,
-       COUNT(oi.order_id) AS total_vendas,
-	   SUM(oi.price) AS receita_total
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY p.product_category_name
-ORDER BY total_vendas DESC
-LIMIT 10;
+select order_id, freight_value
+from order_items_dataset
+order by freight_value desc
+limit 10;
 
--- Quais são os vendedores com maior faturamento?
+-- 11. Quantos vendedores existem?
 
-SELECT 
-    s.seller_id,
-    COUNT(DISTINCT oi.order_id) AS total_orders,
-    SUM(oi.price) AS total_revenue,
-    AVG(oi.price) AS avg_order_value
-FROM order_items_dataset AS oi
-JOIN sellers_dataset AS s ON oi.seller_id = s.seller_id
-GROUP BY s.seller_id
-ORDER BY total_revenue DESC
-LIMIT 10;
+select count(*) as total_vendedores
+from sellers_dataset;
 
--- Qual é a receita total por categoria de produto?
+-- 12. Quantos produtos existem por categoria?
 
-SELECT p.product_category_name, 
-	   SUM(oi.price) AS receita_total
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY p.product_category_name
-ORDER BY receita_total DESC;
-
--- Qual foi o ticket médio (preço médio por pedido)?
-
-SELECT AVG(total) AS ticket_medio
-FROM(SELECT order_id, SUM(price) AS total FROM order_items_dataset GROUP BY order_id)sub;
+select product_category_name, count(*) as total_produtos
+from products_dataset
+group by product_category_name
+order by total_produtos desc;
 
 
--- Qual o tempo médio de entrega dos pedidos (dias)?
-SELECT 
-    AVG(DATE_PART('day', 
-        CAST(order_delivered_customer_date AS timestamp) - 
-        CAST(order_purchase_timestamp AS timestamp)
-    )) AS tempo_medio_entrega
-FROM 
-	orders_dataset
-WHERE 
-    order_delivered_customer_date IS NOT NULL;
+-- 13. Há quantos pedidos por estado do cliente?
+
+select customer_state, count(*) as total_pedidos
+from customers_dataset as c 
+join orders_dataset as o on c.customer_id = o.customer_id
+group by c.customer_state
+order by total_pedidos desc;
+
+-- 14. Quais as top 10 cidades com mais clientes ?
+
+select customer_city, count(*) as total_clientes
+from customers_dataset
+group by customer_city
+order by total_clientes desc
+limit 10;
 
 
-	
+-- 15. Quais são os 10 produtos mais vendidos em quantidade ?
+
+select oi.product_id, count(*) as total_vendas,
+       p.product_category_name
+from order_items_dataset as oi
+join products_dataset as p on oi.product_id = p.product_id
+group by oi.product_id, p.product_category_name
+order by total_vendas desc
+limit 10;
+
+-- 16. Quais são os status de pedidos possíveis e quantos existem em cada um?
+
+select order_status, count(*) as quantidade
+from orders_dataset
+group by order_status
+order by quantidade desc;
+
+-- 17. Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?
+
+select p.product_category_name as categoria,
+       count(oi.order_id) as total_vendas,
+       sum(oi.price) as receita_total
+from order_items_dataset as oi
+join products_dataset as p on oi.product_id = p.product_id
+group by p.product_category_name 
+order by total_vendas desc
+limit 10;
+
+-- 18. Quais são os vendedores com maior faturamento?
+
+select s.seller_id, count(distinct oi.order_id) as total_orders, 
+       sum(oi.price) as total_revenue, 
+       avg(oi.price) as avg_order_value
+from order_items_dataset as oi
+join sellers_dataset as s on oi.seller_id = s.seller_id
+group by s.seller_id
+order by total_revenue desc
+limit 10;
+
+-- 19. Qual é a receita total por categoria de produto?
+
+select p.product_category_name,
+       sum(oi.price) as receita_total
+from order_items_dataset as oi
+join products_dataset as p on oi.product_id = p.product_id
+group by p.product_category_name
+order by receita_total desc;
+
+-- 20. Qual foi o ticket médio (preço médio por pedido)?
+
+select avg(total) as ticket_medio
+from(select order_id, sum(price) as total from order_items_dataset group by order_id) as sub;
 
 
+-- 21. Qual o tempo médio de entrega dos pedidos (dias)?
 
-
-
+select avg(date_part('day',
+           cast(order_delivered_customer_date as timestamp) - cast(order_purchase_timestamp as timestamp))) as tempo_medio_entrega
+from orders_dataset
+where order_delivered_customer_date is not null;
