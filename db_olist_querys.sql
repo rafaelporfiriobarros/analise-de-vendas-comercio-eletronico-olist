@@ -7,8 +7,6 @@ select * from products_dataset limit 10;
 select * from customers_dataset limit 10;
 select * from geolocation_dataset limit 10;
 
-<<<<<<< HEAD
-=======
 
 -- 1. Liste os 10 pedidos mais recentes.
 
