@@ -37,15 +37,12 @@ O conjunto contém vários arquivos CSV relacionados entre si:
 **1. Liste os 5 pedidos mais recentes.**
 
 ```sql
--- 
-
-```sql
 select order_id, order_purchase_timestamp from orders_dataset
 order by order_purchase_timestamp desc
 limit 5;
 ```
 
---R: OS PEDIDOS MAIS RECENTES SÃO DE 17/10/2018, 16/10/2018, 03/10/2018, 01/10/2018 E 29/09/2018.
+**R: OS PEDIDOS MAIS RECENTES SÃO DE 17/10/2018, 16/10/2018, 03/10/2018, 01/10/2018 E 29/09/2018.**
 
 -- 2.Quantos pedidos existem na base?
 
