@@ -212,3 +212,50 @@ limit 10;
 - 422879e10f46682990de24d770e7f83d: 484 - ferramentas_jardim
 - 389d119b48cf3043d311335e499d9c6b: 392 - ferramentas_jardim 
 - 368c6c730842d78016ad823897a372db: 388 - ferramentas_jardim 
+
+**16. Quais são os status de pedidos possíveis e quantos existem em cada um?**
+
+```sql
+select order_status, count(*) as quantidade
+from orders_dataset
+group by order_status
+order by quantidade desc;
+```
+
+**R: EXISTEM AS SEGUINTES QUANTIDADES DE PEDIDOS POSSÍVEIS:**
+
+- delivered: 96478
+- shipped: 1107
+- canceled: 625
+- unavailable: 609
+- invoiced: 314
+- processing: 301
+- created: 5
+- approved: 2
+
+
+**17. Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?**
+
+```sql
+select p.product_category_name as categoria,
+       count(oi.order_id) as total_vendas,
+       sum(oi.price) as receita_total
+from order_items_dataset as oi
+join products_dataset as p on oi.product_id = p.product_id
+group by p.product_category_name 
+order by total_vendas desc
+limit 10;
+```
+
+**R: OS 10 PRODUTOS MAIS VENDIDOS SÃO:**
+
+- cama_mesa_banho: 11115 - 1036988.6800000712
+- beleza_saude: 9670 - 1258681.3399999682
+- esporte_lazer: 8641 - 988048.9700000401
+- moveis_decoracao: 833 - 729762.4900000411
+- informatica_acessorios: 7827 - 911954.3200000388
+- utilidades_domesticas: 6964 - 632248.6600000213
+- relogios_presentes: 5991 - 1205005.6799999995
+- telefonia: 4545 - 323667.529999989
+- ferramentas_jardim: 4347 - 485256.46000001475
+- automotivo: 4235 - 592720.1100000107
