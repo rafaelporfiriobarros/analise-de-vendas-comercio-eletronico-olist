@@ -8,11 +8,11 @@ select * from customers_dataset limit 10;
 select * from geolocation_dataset limit 10;
 
 
--- 1. Liste os 10 pedidos mais recentes.
+-- 1. Liste os 5 pedidos mais recentes.
 
-select * from orders_dataset
+select order_id, order_purchase_timestamp from orders_dataset
 order by order_purchase_timestamp desc
-limit 10;
+limit 5;
 
 -- 2.Quantos pedidos existem na base?
 
@@ -148,3 +148,29 @@ select avg(date_part('day',
            cast(order_delivered_customer_date as timestamp) - cast(order_purchase_timestamp as timestamp))) as tempo_medio_entrega
 from orders_dataset
 where order_delivered_customer_date is not null;
+
+
+-- 22. Qual a quantidade de pedidos por data ? filtrar do maior para o menor. 
+
+select date(order_purchase_timestamp) as day, 
+       count(*) as order_count
+from orders_dataset
+group by day
+order by order_count desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

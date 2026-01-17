@@ -35,70 +35,150 @@ O conjunto contém vários arquivos CSV relacionados entre si:
 ## Perguntas de Negócio
 
 ```sql
--- Quantos clientes únicos existem no dataset ?
+-- 1. Liste os 5 pedidos mais recentes.
 
-SELECT COUNT(DISTINCT customer_unique_id) AS total_clientes_unicos
-FROM customers_dataset;
+select order_id, order_purchase_timestamp from orders_dataset
+order by order_purchase_timestamp desc
+limit 5;
 
--- Qual o número total de pedidos ?
+**R: OS PEDIDOS MAIS RECENTES SÃO DE 17/10/2018, 16/10/2018, 03/10/2018, 01/10/2018 E 29/09/2018.**
 
-SELECT COUNT(*) AS total_pedidos
-FROM orders_dataset;
+-- 2.Quantos pedidos existem na base?
 
--- Quais são os 10 produtos mais vendidos em quantidade ?
+select count(*) as total_de_pedidos from orders_dataset;
 
-SELECT oi.product_id,
-       COUNT(*) AS total_vendas,
-	   p.product_category_name
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY oi.product_id, p.product_category_name
-ORDER BY total_vendas DESC
-LIMIT 10;
+**R: EXISTEM 99.441 PEDIDOS REGISTRADOS NA BASE. 
 
--- Quais são os status de pedidos possíveis e quantos existem em cada um?
+-- 3. Quantos pedidos foram entregues?
 
-SELECT order_status, COUNT(*) AS quantidade
-FROM orders_dataset
-GROUP BY order_status
-ORDER BY quantidade DESC;
+select count(*) from orders_dataset
+where order_status = 'delivered'; 
 
--- Quais os 10 produtos mais vendidos com nome da categoria, número de vendas e receita total gerada ?
+**R: FORAM ENTREGUES 96.478 PEDIDOS.**
 
-SELECT p.product_category_name AS categoria,
-       COUNT(oi.order_id) AS total_vendas,
-	   SUM(oi.price) AS receita_total
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY p.product_category_name
-ORDER BY total_vendas DESC
-LIMIT 10;
+-- 4. Quantos clientes únicos existem?
 
--- Quais são os vendedores com maior faturamento?
+select count(distinct customer_unique_id)
+from customers_dataset;
 
-SELECT 
-    s.seller_id,
-    COUNT(DISTINCT oi.order_id) AS total_orders,
-    SUM(oi.price) AS total_revenue,
-    AVG(oi.price) AS avg_order_value
-FROM order_items_dataset AS oi
-JOIN sellers_dataset AS s ON oi.seller_id = s.seller_id
-GROUP BY s.seller_id
-ORDER BY total_revenue DESC
-LIMIT 10;
+**R: EXISTEM 96.096 CLIENTES ÚNICOS.
 
--- Qual é a receita total por categoria de produto?
+-- 5. Quantos sellers existem?
 
-SELECT p.product_category_name, 
-	   SUM(oi.price) AS receita_total
-FROM order_items_dataset AS oi
-JOIN products_dataset AS p ON oi.product_id = p.product_id
-GROUP BY p.product_category_name
-ORDER BY receita_total DESC;
+select count(*) from sellers_dataset;
 
--- Qual foi o ticket médio (preço médio por pedido)?
+**R: EXISTEM 3.095 SELLERS.** 
 
-SELECT AVG(total) AS ticket_medio
-FROM(SELECT order_id, SUM(price) AS total FROM order_items_dataset GROUP BY order_id)sub;
+-- 6. Quantos produtos existem?
+
+select count(*) from products_dataset;
+
+**R: EXISTEM 32.951 PRODUTOS.**
+
+-- 7. Liste todas as categorias de produtos distintas.
+
+select distinct product_category_name
+from products_dataset
+order by product_category_name;
+
+**R: AS 5 PRIMEIRAS CATEGORIAS SÃO: "agro_industria_e_comercio", "alimentos", "alimentos_bebidas", "artes", "artes_e_artesanato".** 
+
+-- 8. Quantos pedidos foram cancelados?
+
+select count(*) from orders_dataset
+where order_status = 'canceled';
+
+**R: FORAM CANCELADOS 625 PEDIDOS.**
+
+-- 9. Qual o valor médio de frete (freight_value)?
+
+select avg(freight_value) from order_items_dataset;
+
+**R: O VALOR MÉDIO DE FRETE É DE R$ 19.99.**
+
+-- 10. Liste os 10 pedidos com o maior valor de frete.
+
+select order_id, freight_value
+from order_items_dataset
+order by freight_value desc
+limit 10;
+
+**R: OS 5 PRIMEIROS PEDIDOS COM O MAIOR VALOR DE FRETE SÃO:**
+
+    - **77e1550db865202c56b19ddc6dc4d53: 409.68**
+    - **76d1555fb53a89b0ef4d529e527a0f6: 375.28**
+    - **fde74c28a3d5d618c00f26d51baafa0: 375.28**
+    - **f49bd16053df810384e793386312674: 339.59**
+    - **64a7e199467906c0727394df82d1a6a: 338.3**
+
+-- 11. Quantos vendedores existem?
+
+select count(*) as total_vendedores
+from sellers_dataset;
+
+**R: EXISTEM 3.095 VENDEDORES. 
+
+-- 12. Quantos produtos existem por categoria?
+
+select product_category_name, count(*) as total_produtos
+from products_dataset
+group by product_category_name
+order by total_produtos desc;
+
+**R: OS 5 PRIMEIROS PRODUTOS SÃO:**
+
+    - **cama_mesa_banho:3029**
+    - **esporte_lazer:2867**
+    - **moveis_decoracao:2657**
+    - **beleza_saude:2444**
+    - **utilidades_domesticas:2335**
+
+-- 13. Há quantos pedidos por estado do cliente?
+
+select customer_state, count(*) as total_pedidos
+from customers_dataset as c 
+join orders_dataset as o on c.customer_id = o.customer_id
+group by c.customer_state
+order by total_pedidos desc;
+
+**R: OS 5 PRIMEIROS PEDIDOS SÃO:
+    - *SP: 41746**
+    - *RJ: 12852**
+    - *MG: 11635**
+    - *RS: 5466**
+    - *PR: 5045**
+
+-- 14. Quais as top 10 cidades com mais clientes ?
+
+select customer_city, count(*) as total_clientes
+from customers_dataset
+group by customer_city
+order by total_clientes desc
+limit 10;
+
+**R: AS 5 PRIMEIRAS CIDADES SÃO:
+
+    - **sao paulo: 15540**
+    - **rio de janeiro: 6882**
+    - **belo horizonte: 2773**
+    - **brasilia: 2131**
+    - **curitiba: 1521**
 
 
+-- 15. Quais são os 10 produtos mais vendidos em quantidade ?
+
+select oi.product_id, count(*) as total_vendas,
+       p.product_category_name
+from order_items_dataset as oi
+join products_dataset as p on oi.product_id = p.product_id
+group by oi.product_id, p.product_category_name
+order by total_vendas desc
+limit 10;
+
+**R: OS 5 PRIMEIROS SÃO:**
+
+    - aca2eb7d00ea1a7b8ebd4e68314663af: 527 - moveis_decoracao 
+    - 99a4788cb24856965c36a24e339b6058: 488 - cama_mesa_banho 
+    - 422879e10f46682990de24d770e7f83d: 484 - ferramentas_jardim
+    - 389d119b48cf3043d311335e499d9c6b: 392 - ferramentas_jardim 
+    - 368c6c730842d78016ad823897a372db: 388 - ferramentas_jardim 
