@@ -44,65 +44,83 @@ limit 5;
 
 **R: OS PEDIDOS MAIS RECENTES SÃO DE 17/10/2018, 16/10/2018, 03/10/2018, 01/10/2018 E 29/09/2018.**
 
--- 2.Quantos pedidos existem na base?
+**2.Quantos pedidos existem na base?**
 
+```sql
 select count(*) as total_de_pedidos from orders_dataset;
+```
 
-**R: EXISTEM 99.441 PEDIDOS REGISTRADOS NA BASE. 
+**R: EXISTEM 99.441 PEDIDOS REGISTRADOS NA BASE.**
 
--- 3. Quantos pedidos foram entregues?
+**3. Quantos pedidos foram entregues?**
 
+```sql
 select count(*) from orders_dataset
 where order_status = 'delivered'; 
+```
 
 **R: FORAM ENTREGUES 96.478 PEDIDOS.**
 
--- 4. Quantos clientes únicos existem?
+**4. Quantos clientes únicos existem?**
 
+```sql
 select count(distinct customer_unique_id)
 from customers_dataset;
+```
 
-**R: EXISTEM 96.096 CLIENTES ÚNICOS.
+**R: EXISTEM 96.096 CLIENTES ÚNICOS.**
 
--- 5. Quantos sellers existem?
+**5. Quantos sellers existem?**
 
+```sql
 select count(*) from sellers_dataset;
+```
 
 **R: EXISTEM 3.095 SELLERS.** 
 
--- 6. Quantos produtos existem?
+**6. Quantos produtos existem?**
 
+```sql
 select count(*) from products_dataset;
+```
 
 **R: EXISTEM 32.951 PRODUTOS.**
 
--- 7. Liste todas as categorias de produtos distintas.
+**7. Liste todas as categorias de produtos distintas.**
 
+```sql
 select distinct product_category_name
 from products_dataset
 order by product_category_name;
+```
 
 **R: AS 5 PRIMEIRAS CATEGORIAS SÃO: "agro_industria_e_comercio", "alimentos", "alimentos_bebidas", "artes", "artes_e_artesanato".** 
 
--- 8. Quantos pedidos foram cancelados?
+**8. Quantos pedidos foram cancelados?**
 
+```sql
 select count(*) from orders_dataset
 where order_status = 'canceled';
+```
 
 **R: FORAM CANCELADOS 625 PEDIDOS.**
 
--- 9. Qual o valor médio de frete (freight_value)?
+**9. Qual o valor médio de frete (freight_value)?**
 
+```sql
 select avg(freight_value) from order_items_dataset;
+```
 
 **R: O VALOR MÉDIO DE FRETE É DE R$ 19.99.**
 
--- 10. Liste os 10 pedidos com o maior valor de frete.
+**10. Liste os 10 pedidos com o maior valor de frete.**
 
+```sql
 select order_id, freight_value
 from order_items_dataset
 order by freight_value desc
 limit 10;
+```
 
 **R: OS 5 PRIMEIROS PEDIDOS COM O MAIOR VALOR DE FRETE SÃO:**
 
@@ -112,19 +130,23 @@ limit 10;
     - **f49bd16053df810384e793386312674: 339.59**
     - **64a7e199467906c0727394df82d1a6a: 338.3**
 
--- 11. Quantos vendedores existem?
+**11. Quantos vendedores existem?**
 
+```sql
 select count(*) as total_vendedores
 from sellers_dataset;
+```
 
-**R: EXISTEM 3.095 VENDEDORES. 
+**R: EXISTEM 3.095 VENDEDORES.**
 
--- 12. Quantos produtos existem por categoria?
+**12. Quantos produtos existem por categoria?**
 
+```sql
 select product_category_name, count(*) as total_produtos
 from products_dataset
 group by product_category_name
 order by total_produtos desc;
+```
 
 **R: OS 5 PRIMEIROS PRODUTOS SÃO:**
 
@@ -134,30 +156,34 @@ order by total_produtos desc;
     - **beleza_saude:2444**
     - **utilidades_domesticas:2335**
 
--- 13. Há quantos pedidos por estado do cliente?
+**13. Há quantos pedidos por estado do cliente?**
 
+```sql
 select customer_state, count(*) as total_pedidos
 from customers_dataset as c 
 join orders_dataset as o on c.customer_id = o.customer_id
 group by c.customer_state
 order by total_pedidos desc;
+```
 
-**R: OS 5 PRIMEIROS PEDIDOS SÃO:
+**R: OS 5 PRIMEIROS PEDIDOS SÃO:**
     - *SP: 41746**
     - *RJ: 12852**
     - *MG: 11635**
     - *RS: 5466**
     - *PR: 5045**
 
--- 14. Quais as top 10 cidades com mais clientes ?
+**14. Quais as top 10 cidades com mais clientes ?**
 
+```sql
 select customer_city, count(*) as total_clientes
 from customers_dataset
 group by customer_city
 order by total_clientes desc
 limit 10;
+```
 
-**R: AS 5 PRIMEIRAS CIDADES SÃO:
+**R: AS 5 PRIMEIRAS CIDADES SÃO:**
 
     - **sao paulo: 15540**
     - **rio de janeiro: 6882**
@@ -166,8 +192,9 @@ limit 10;
     - **curitiba: 1521**
 
 
--- 15. Quais são os 10 produtos mais vendidos em quantidade ?
+**15. Quais são os 10 produtos mais vendidos em quantidade ?**
 
+```sql
 select oi.product_id, count(*) as total_vendas,
        p.product_category_name
 from order_items_dataset as oi
@@ -175,6 +202,7 @@ join products_dataset as p on oi.product_id = p.product_id
 group by oi.product_id, p.product_category_name
 order by total_vendas desc
 limit 10;
+```
 
 **R: OS 5 PRIMEIROS SÃO:**
 
