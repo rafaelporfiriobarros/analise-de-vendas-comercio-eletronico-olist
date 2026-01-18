@@ -194,3 +194,46 @@ group by seller_id
 order by pedidos desc
 limit 10;
 
+-- 28. Qual o faturamento total ?
+
+select sum(price + freight_value) as faturamento_total
+from order_items_dataset as oi
+join orders_dataset as o
+on oi.order_id = o.order_id
+where o.order_status = 'delivered';
+
+-- 29. Qual o faturamento mensal ? 
+
+select date_trunc('month', o.order_purchase_timestamp) as mes, 
+       sum(price + freight_value) as faturamento
+from orders_dataset as o
+join order_items_dataset as oi
+on o.order_id = oi.order_id
+where o.order_status = 'delivered'
+group by mes
+order by mes;
+
+-- 30. Qual o ticket médio de todas as vendas? utilizar o with
+
+with pedido as(
+    select order_id, sum(price + freight_value) as total
+    from order_items_dataset
+    group by order_id
+)
+select avg(total) from pedido;
+
+-- 31. Qual o top de categorias por faturamento?
+
+select p.product_category_name,
+       sum(oi.price) as faturamento
+from order_items_dataset as oi
+join products_dataset as p
+on oi.product_id = p.product_id
+join orders_dataset as o
+on oi.order_id = o.order_id
+where o.order_status = 'delivered'
+group by p.product_category_name
+order by faturamento desc
+limit 10;
+
+
