@@ -159,18 +159,38 @@ group by day
 order by order_count desc;
 
 
+-- 23. Quantos pedidos foram pagos com cartão ?
 
+select count(*) 
+from order_payments_dataset
+where payment_type = 'credit_card';
 
+-- 24. Quais são os estados com mais clientes? 
 
+select geolocation_state, count(*) as total
+from customers_dataset as c
+join geolocation_dataset as g
+on c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
+group by geolocation_state
+order by total desc
+limit 5;
 
+-- 25. Há quantas avaliações com nota 5?
 
+select count(*) 
+from order_reviews_dataset
+where review_score = 5;
 
+-- 26. Qual a nota média geral em avaliações?
 
+select avg(review_score) 
+from order_reviews_dataset;
 
+-- 27. Qual a quantidade de sellers com mais pedidos?
 
-
-
-
-
-
+select seller_id, count(distinct order_id) as pedidos
+from order_items_dataset
+group by seller_id
+order by pedidos desc
+limit 10;
 
