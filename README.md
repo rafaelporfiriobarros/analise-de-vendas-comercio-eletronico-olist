@@ -87,6 +87,26 @@ O foco é desenvolver consultas SQL utilizadas em cenários reais de análise de
 
 # Perguntas de Negócio
 
+**QUAL A QUANTIDADE DE PEDIDOS POR STATUS**
+
+```sql
+select order_status, count(*) as total
+from orders_dataset
+group by order_status 
+order by total desc;
+```
+
+R: A quantidade de pedidos por status:
+
+- delivered: 96478
+- shipped: 1107
+- canceled: 625
+- unavailable: 609
+- invoiced: 314
+- processing: 301
+- created: 5
+- approved: 2
+
 **QUAL O TOP 10 DAS CATEGORIAS COM MAIOR FATURAMENTO**
 
 ```sql

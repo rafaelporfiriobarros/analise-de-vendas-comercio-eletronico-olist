@@ -1,3 +1,12 @@
+/* QUAL A QUANTIDADE DE PEDIDOS POR STATUS */
+
+
+select order_status, count(*) as total
+from orders_dataset
+group by order_status 
+order by total desc;
+
+
 /* VENDAS */
 
 -- TOP 10 CATEGORIAS COM MAIOR FATURAMENTO
