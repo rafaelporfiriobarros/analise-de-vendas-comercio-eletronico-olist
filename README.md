@@ -1,12 +1,14 @@
 # Análise de Dados com PostgreSQL - Olist E-commerce
 
+<p align="center">
+  <img src="images/thumbnail.png" alt="Modelo Relacional" width="500">
+</p>
+
 Projeto de análise exploratória utilizando **PostgreSQL** e o dataset público da **Olist**, disponível no Kaggle.
 
 O objetivo é praticar consultas SQL voltadas para **Engenharia de Dados** e **Analytics**, explorando métricas de vendas, logística, clientes e desempenho operacional.
 
 # Sobre o Dataset
-
-![alt text](image.png)
 
 O dataset contém aproximadamente **100 mil pedidos** realizados entre **2016 e 2018** em marketplaces brasileiros.
 
@@ -52,6 +54,8 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 ---
 
 # Relacionamentos
+
+![alt text](image.png)
 
 ```
 Customers
