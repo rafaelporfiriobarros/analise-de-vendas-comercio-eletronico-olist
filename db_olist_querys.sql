@@ -1,3 +1,75 @@
+/* RECEITA POR ESTADO */
+
+select
+c.customer_state, 
+sum(p.payment_value) as receita
+from orders_dataset as o
+join customers_dataset as c
+on o.customer_id = c.customer_id
+join order_payments_dataset as p
+on o.order_id = p.order_id
+group by c.customer_state
+order by receita desc;
+
+/* TICKET MÉDIO POR ESTADO */
+
+select 
+c.customer_state, 
+avg(p.payment_value) as ticket_medio
+from orders_dataset as o
+join customers_dataset as c
+on o.customer_id = c.customer_id
+join order_payments_dataset as p
+on o.order_id = p.order_id
+group by c.customer_state
+order by ticket_medio desc;
+
+/* TOTAL DA RECEITA POR CATEGORIA */
+
+select * from order_items_dataset limit 10;
+
+select 
+pr.product_category_name,
+round(sum(oi.price)::numeric,2) as receita
+from order_items_dataset as oi
+join products_dataset as pr
+on oi.product_id = pr.product_id
+group by pr.product_category_name
+order by receita desc;
+
+
+/* PEDIDOS POR DIA DA SEMANA */
+
+select 
+to_char(order_purchase_timestamp::timestamp, 'Day') as dia,
+count(*) as total
+from orders_dataset
+group by dia
+order by total desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* QUAL A QUANTIDADE DE PEDIDOS POR STATUS */
 
 
