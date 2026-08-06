@@ -4,13 +4,9 @@ Projeto de análise exploratória utilizando **PostgreSQL** e o dataset público
 
 O objetivo é praticar consultas SQL voltadas para **Engenharia de Dados** e **Analytics**, explorando métricas de vendas, logística, clientes e desempenho operacional.
 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
-![SQL](https://img.shields.io/badge/SQL-Analytics-success)
-![Dataset](https://img.shields.io/badge/Olist-Kaggle-orange)
-
----
-
 # Sobre o Dataset
+
+![alt text](image.png)
 
 O dataset contém aproximadamente **100 mil pedidos** realizados entre **2016 e 2018** em marketplaces brasileiros.
 
