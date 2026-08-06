@@ -708,3 +708,312 @@ R: O crescimento mensal em todo o período foi:
 | 2018-08 | 1.022.425,32 | 1.066.540,75 | -44.115,43 |
 | 2018-09 | 4.439,54 | 1.022.425,32 | -1.017.985,78 |
 | 2018-10 | 589,67 | 4.439,54 | -3.849,87 |
+
+--- 
+
+# Relatório de Insights - Análise de Dados do E-commerce Olist
+
+## Objetivo
+
+Este relatório apresenta os principais insights obtidos a partir da análise exploratória do dataset público da Olist utilizando PostgreSQL e SQL. As análises contemplam indicadores de vendas, logística, clientes, produtos, pagamentos e desempenho comercial.
+
+---
+
+# Resumo
+
+Durante o período analisado (2016 a 2018) foi possível identificar padrões importantes relacionados ao comportamento dos clientes, categorias mais rentáveis, desempenho logístico e sazonalidade das vendas.
+
+Entre os principais resultados destacam-se:
+
+- Mais de **96 mil pedidos entregues** com sucesso.
+- O estado de **São Paulo** concentra a maior parte da receita.
+- As categorias **Beleza & Saúde** e **Relógios & Presentes** lideram o faturamento.
+- O cartão de crédito é responsável pela maior parte dos pagamentos.
+- Novembro de 2017 apresentou o maior faturamento do período, indicando forte influência da Black Friday.
+
+---
+
+# 1. Status dos Pedidos
+
+## Insight
+
+A operação logística apresenta alta eficiência.
+
+- Mais de **96% dos pedidos** foram entregues.
+- Poucos pedidos foram cancelados ou ficaram indisponíveis.
+
+### Impacto para o negócio
+
+- Alto nível de confiabilidade operacional.
+- Baixo índice de falhas no processo de entrega.
+
+---
+
+# 2. Receita por Categoria
+
+## Insight
+
+Poucas categorias concentram grande parte do faturamento.
+
+As principais são:
+
+- Beleza & Saúde
+- Relógios & Presentes
+- Cama, Mesa e Banho
+- Esporte e Lazer
+- Informática
+
+### Impacto
+
+Essas categorias representam oportunidades para:
+
+- campanhas promocionais;
+- expansão do catálogo;
+- otimização de estoque.
+
+---
+
+# 3. Ticket Médio
+
+## Insight
+
+Categorias de tecnologia possuem maior valor agregado.
+
+Destacam-se:
+
+- PCs
+- Portáteis
+- Eletrodomésticos Premium
+- Instrumentos Musicais
+
+### Impacto
+
+Mesmo com menor volume de vendas, essas categorias geram maior receita por pedido.
+
+---
+
+# 4. Receita por Estado
+
+## Insight
+
+A receita está altamente concentrada na Região Sudeste.
+
+Ranking:
+
+1. São Paulo
+2. Rio de Janeiro
+3. Minas Gerais
+
+### Impacto
+
+A empresa possui forte dependência econômica desses estados.
+
+Pode haver oportunidade para expansão comercial em outras regiões.
+
+---
+
+# 5. Ticket Médio por Estado
+
+## Insight
+
+Os maiores tickets médios não estão nos estados com maior faturamento.
+
+Estados como:
+
+- Paraíba
+- Acre
+- Rondônia
+
+apresentam ticket médio superior ao de São Paulo.
+
+### Impacto
+
+Clientes dessas regiões realizam compras menos frequentes, porém com maior valor.
+
+---
+
+# 6. Comportamento dos Clientes
+
+## Insight
+
+Os pedidos concentram-se durante os dias úteis.
+
+Maior movimento:
+
+- Segunda-feira
+- Terça-feira
+- Quarta-feira
+
+Menor movimento:
+
+- Sábado
+- Domingo
+
+### Impacto
+
+Campanhas de marketing podem ser planejadas para aproveitar o maior fluxo durante a semana.
+
+---
+
+# 7. Logística
+
+## Insight
+
+Os maiores tempos médios de entrega ocorrem em estados da Região Norte.
+
+Destacam-se:
+
+- Roraima
+- Amapá
+- Amazonas
+- Pará
+
+### Impacto
+
+Os custos logísticos e a distância influenciam diretamente o prazo de entrega.
+
+---
+
+# 8. Peso x Frete
+
+## Insight
+
+Categorias com produtos maiores apresentam maior custo logístico.
+
+Exemplos:
+
+- Cama, Mesa e Banho
+- Móveis
+- Ferramentas
+
+### Impacto
+
+O frete representa parcela significativa do custo operacional dessas categorias.
+
+---
+
+# 9. Avaliações dos Clientes
+
+## Insight
+
+A maioria das categorias apresenta notas superiores a 4.
+
+Isso demonstra boa satisfação dos consumidores.
+
+### Impacto
+
+O marketplace apresenta boa experiência de compra.
+
+---
+
+# 10. Pagamentos
+
+## Insight
+
+O Cartão de Crédito domina completamente as transações.
+
+Além disso:
+
+- média de 3,5 parcelas;
+- boleto aparece como segunda opção.
+
+### Impacto
+
+A empresa depende fortemente do ecossistema de cartões.
+
+---
+
+# 11. Receita Mensal
+
+## Insight
+
+Existe forte sazonalidade.
+
+O maior faturamento ocorreu em:
+
+- Novembro de 2017
+
+Esse comportamento coincide com a Black Friday.
+
+Após novembro observa-se queda em dezembro seguida de recuperação em janeiro.
+
+### Impacto
+
+Datas promocionais possuem enorme influência sobre o faturamento.
+
+---
+
+# 12. Crescimento Mensal
+
+## Insight
+
+Ao longo de 2017 e 2018 houve crescimento consistente.
+
+As maiores altas ocorreram:
+
+- Fevereiro/2017
+- Maio/2017
+- Novembro/2017
+- Janeiro/2018
+
+Os meses finais apresentam forte queda devido ao encerramento do período disponível no dataset.
+
+### Impacto
+
+Os dados indicam expansão da operação durante praticamente todo o período analisado.
+
+---
+
+# 13. Vendedores
+
+## Insight
+
+Poucos vendedores concentram grande parte das vendas.
+
+Existe concentração tanto em:
+
+- faturamento;
+- quantidade de pedidos.
+
+### Impacto
+
+Esses vendedores são estratégicos para o marketplace.
+
+---
+
+# 14. Clientes
+
+## Insight
+
+Existe um pequeno grupo de clientes com gasto muito superior à média.
+
+### Impacto
+
+Esses consumidores podem ser classificados como clientes VIP e alvo de programas de fidelização.
+
+---
+
+# Principais KPIs
+
+| Indicador | Insight |
+|-----------|---------|
+| Pedidos entregues | Alta eficiência operacional |
+| Receita | Concentrada em poucas categorias |
+| Ticket Médio | Maior em produtos de tecnologia |
+| Receita por Estado | Forte concentração no Sudeste |
+| Ticket por Estado | Norte e Nordeste apresentam maior ticket médio |
+| Logística | Norte possui maiores tempos de entrega |
+| Pagamentos | Cartão de crédito domina as transações |
+| Receita Mensal | Forte influência da Black Friday |
+| Clientes | Pequeno grupo concentra maior gasto |
+| Vendedores | Poucos vendedores concentram o faturamento |
+
+---
+
+# Conclusão
+
+A análise demonstra que o marketplace da Olist apresenta uma operação madura, com elevada taxa de entrega, boa satisfação dos clientes e crescimento consistente durante o período analisado.
+
+Os resultados evidenciam oportunidades relacionadas à expansão geográfica, otimização logística, diversificação de categorias e desenvolvimento de estratégias específicas para clientes e vendedores de maior valor.
+
+Este projeto permitiu aplicar conceitos de SQL voltados para Engenharia de Dados e Analytics, explorando consultas com agregações, JOINs, CTEs, Window Functions e indicadores de negócio, aproximando o ambiente de estudo de cenários reais de análise de dados.
